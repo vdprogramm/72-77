@@ -1,0 +1,45 @@
+using System;
+using System.Data.SqlClient;
+
+namespace Database_Operation
+{
+    class DeleteStatement
+    {
+        // Main Method
+        static void Main()
+        {
+            Delete();
+            Console.ReadKey();
+        }
+
+        static void Delete()
+        {
+            string constr;
+            SqlConnection conn;
+            constr = @"Data Source=DESKTOP-GP8F496;Initial Catalog=Demodb;User ID=sa;Password=24518300";
+            conn = new SqlConnection(constr);
+
+            try
+            {
+                // Open the connection
+                conn.Open();
+                SqlCommand cmd;
+                SqlDataAdapter adap = new SqlDataAdapter();
+                string sql = "DELETE FROM demo WHERE articleID='3'";
+                cmd = new SqlCommand(sql, conn);
+                adap.DeleteCommand = new SqlCommand(sql, conn);
+                adap.DeleteCommand.ExecuteNonQuery();
+                
+                Console.WriteLine("Data deleted successfully.");
+
+                // Clean up
+                cmd.Dispose();
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
+    }
+}
