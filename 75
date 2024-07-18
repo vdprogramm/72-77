@@ -1,0 +1,45 @@
+using System;
+using System.Data.SqlClient;
+
+namespace Database_Operation
+{
+    class UpdateStatement
+    {
+        // Main Method
+        static void Main()
+        {
+            Update();
+            Console.ReadKey();
+        }
+
+        static void Update()
+        {
+            string constr;
+            SqlConnection conn;
+            constr = @"Data Source=DESKTOP-GP8F496;Initial Catalog=Demodb;User ID=sa;Password=24518300";
+            conn = new SqlConnection(constr);
+
+            try
+            {
+                // Open the connection
+                conn.Open();
+                SqlCommand cmd;
+                SqlDataAdapter adap = new SqlDataAdapter();
+                string sql = "UPDATE demo SET articleName='django' WHERE articleID='3'";
+                cmd = new SqlCommand(sql, conn);
+                adap.UpdateCommand = new SqlCommand(sql, conn);
+                adap.UpdateCommand.ExecuteNonQuery();
+                
+                Console.WriteLine("Data updated successfully.");
+
+                // Clean up
+                cmd.Dispose();
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
+    }
+}
