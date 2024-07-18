@@ -1,0 +1,74 @@
+a)
+-- Create the database
+CREATE DATABASE Demodb;
+GO
+
+-- Use the newly created database
+USE Demodb;
+GO
+
+-- Create the demo table
+CREATE TABLE demo (
+    articleID varchar(30) NOT NULL PRIMARY KEY,
+    articleName varchar(30) NOT NULL
+);
+GO
+
+-- Insert data into the demo table
+INSERT INTO demo VALUES ('1', 'C#');
+INSERT INTO demo VALUES ('2', 'C++');
+GO
+
+b)
+using System;
+using System.Data.SqlClient;
+
+namespace Database_Operation
+{
+    class DBConn
+    {
+        // Main Method
+        static void Main()
+        {
+            Connect();
+            Console.ReadKey();
+        }
+
+        static void Connect()
+        {
+            string constr;
+            SqlConnection conn;
+
+            // Connection string
+            constr = @"Data Source=DESKTOP-GP8F496;Initial Catalog=Demodb;User ID=sa;Password=24518300";
+            conn = new SqlConnection(constr);
+
+            try
+            {
+                // Open the connection
+                conn.Open();
+                Console.WriteLine("Connection Opened!");
+
+                // Execute SQL query
+                string query = "SELECT * FROM demo";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                // Read and display the data
+                while (reader.Read())
+                {
+                    Console.WriteLine($"{reader["articleID"]}, {reader["articleName"]}");
+                }
+                reader.Close();
+
+                // Close the connection
+                conn.Close();
+                Console.WriteLine("Connection Closed!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
+    }
+}
