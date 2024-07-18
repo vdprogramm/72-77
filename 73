@@ -1,0 +1,115 @@
+using System;
+using System.Data.SqlClient;
+
+namespace Database_Operation
+{
+    class SelectStatement
+    {
+        // Main Method
+        static void Main()
+        {
+            Read();
+            Console.ReadKey();
+        }
+
+        static void Read()
+        {
+            string constr;
+            SqlConnection conn;
+
+            // Connection string
+            constr = @"Data Source=DESKTOP-GP8F496;Initial Catalog=Demodb;User ID=sa;Password=24518300";
+            conn = new SqlConnection(constr);
+
+            try
+            {
+                // Open the connection
+                conn.Open();
+                SqlCommand cmd;
+                SqlDataReader dreader;
+
+                string sql, output = "";
+                sql = "Select articleID, articleName from demo";
+                cmd = new SqlCommand(sql, conn);
+                dreader = cmd.ExecuteReader();
+
+                // Read each row from the table
+                while (dreader.Read())
+                {
+                    output = output + dreader.GetValue(0) + " - " + dreader.GetValue(1) + "\n";
+                }
+
+                Console.Write(output);
+
+                // Close the reader and the connection
+                dreader.Close();
+                cmd.Dispose();
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
+    }
+}
+
+
+For Exercise 73.b:
+
+csharp
+Sao chép mã
+using System;
+using System.Data.SqlClient;
+
+namespace Database_Operation
+{
+    class SelectStatement
+    {
+        static void Main()
+        {
+            Read();
+            Console.ReadKey();
+        }
+
+        static void Read()
+        {
+            string constr;
+            SqlConnection conn;
+
+            // Connection string
+            constr = @"Data Source=DESKTOP-GP8F496;Initial Catalog=Demodb;User ID=sa;Password=24518300";
+            conn = new SqlConnection(constr);
+
+            try
+            {
+                // Open the connection
+                conn.Open();
+                SqlCommand cmd;
+                SqlDataReader dreader;
+
+                string sql, output = "";
+                sql = "Select articleID, articleName from demo";
+                cmd = new SqlCommand(sql, conn);
+                dreader = cmd.ExecuteReader();
+
+                // Read each row from the table
+                while (dreader.Read())
+                {
+                    output = output + dreader.GetValue(0) + " - " + dreader.GetValue(1) + "\n";
+                }
+
+                Console.Write(output);
+
+                // Close the reader and the connection
+                dreader.Close();
+                cmd.Dispose();
+                conn.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+        }
+    }
+}
